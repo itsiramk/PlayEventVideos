@@ -16,10 +16,10 @@
 
     <style name="TextViewStyle" parent="android:Widget.TextView">
         <item name="android:textColor">@color/purple_500</item>
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">14sp</item>
     </style>
     <style name="TextViewDateStyle" parent="android:Widget.TextView">
         <item name="android:textColor">@color/purple_500</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">12sp</item>
     </style>
 </resources>
