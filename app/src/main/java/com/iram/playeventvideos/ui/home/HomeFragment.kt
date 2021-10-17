@@ -4,45 +4,59 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.iram.playeventvideos.R
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.iram.playeventvideos.adapters.EventsListAdapter
 import com.iram.playeventvideos.databinding.FragmentHomeBinding
+import com.iram.playeventvideos.model.EventSchedule
+import com.iram.playeventvideos.utils.autoCleared
 import com.iram.playeventvideos.viewmodel.EventScheduleViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-class HomeFragment : Fragment() {
+@AndroidEntryPoint
+class HomeFragment : Fragment(), EventsListAdapter.EventItemListener {
 
     private lateinit var eventViewModel: EventScheduleViewModel
-    private var _binding: FragmentHomeBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
-
+    private var binding: FragmentHomeBinding by autoCleared()
+    private lateinit var eventsListAdapter : EventsListAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        eventViewModel =
-            ViewModelProvider(this).get(EventScheduleViewModel::class.java)
+        eventViewModel = ViewModelProvider(this).get(EventScheduleViewModel::class.java)
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initViews()
+        fetchData()
+    }
 
-        val textView: TextView = binding.textHome
+    private fun fetchData() {
         eventViewModel.res.observe(viewLifecycleOwner, {
-            if(it.data!=null){
-
-            }
+            if(it?.data != null && it.data.isNotEmpty())
+                eventsListAdapter.setItems(it.data as ArrayList<EventSchedule>)
         })
-        return root
+    }
+
+    private fun initViews() {
+        eventsListAdapter = EventsListAdapter(this)
+        binding.recyclerView.layoutManager = LinearLayoutManager(context)
+        binding.recyclerView.itemAnimator = DefaultItemAnimator()
+        binding.recyclerView.adapter = eventsListAdapter
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
+    }
+
+    override fun onClickedItemData(title: String) {
+        TODO("Not yet implemented")
     }
 }

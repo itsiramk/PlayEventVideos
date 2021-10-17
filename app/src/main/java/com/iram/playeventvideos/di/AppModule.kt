@@ -1,9 +1,8 @@
 package com.iram.playeventvideos.di
 
-import android.content.Context
-import androidx.viewbinding.BuildConfig
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.iram.playeventvideos.BuildConfig
 import com.iram.playeventvideos.network.ServerDataSource
 import com.iram.playeventvideos.network.iService
 import com.iram.playeventvideos.repository.EventsRepository
@@ -11,7 +10,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
-import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -52,11 +50,6 @@ class AppModule {
     @Provides
     fun provideService(retrofit: Retrofit): iService = retrofit.create(iService::class.java)
 
-    @Singleton
-    @Provides
-    fun provideContext(@ApplicationContext appContext: Context): Context {
-        return appContext
-    }
 
     @Singleton
     @Provides
