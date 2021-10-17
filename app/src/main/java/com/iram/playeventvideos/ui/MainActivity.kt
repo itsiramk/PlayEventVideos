@@ -1,4 +1,4 @@
-package com.iram.playeventvideos
+package com.iram.playeventvideos.ui
 
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -7,6 +7,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.iram.playeventvideos.R
 import com.iram.playeventvideos.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 

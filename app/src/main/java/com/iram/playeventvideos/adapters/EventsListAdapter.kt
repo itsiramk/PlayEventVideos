@@ -9,6 +9,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.iram.playeventvideos.R
 import com.iram.playeventvideos.databinding.ItemRviewBinding
 import com.iram.playeventvideos.model.EventSchedule
+import com.iram.playeventvideos.utils.DateFormat
 
 class EventsListAdapter(private val listener: EventItemListener) :
     RecyclerView.Adapter<EventsListAdapter.EventScheduleListViewHolder>() {
@@ -44,11 +45,12 @@ class EventsListAdapter(private val listener: EventItemListener) :
         fun bind(item: EventSchedule) {
             itemList = item
             itemBinding.tvTitle.text = item.title
-            itemBinding.tvDate.text = item.date
+            val formattedDate = DateFormat.dateToDayTime(DateFormat.stringToDate(item.date))
+            itemBinding.tvDate.text = formattedDate
             Glide.with(itemBinding.root).load(item.imageUrl).transform(CircleCrop())
-                .placeholder(R.drawable.ic_launcher_background)
-                .placeholder(R.drawable.ic_launcher_background)
-                .error(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.dazn)
+                .placeholder(R.drawable.dazn)
+                .error(R.drawable.dazn)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(itemBinding.imageView)
 
