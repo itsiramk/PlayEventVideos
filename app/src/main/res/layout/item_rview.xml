@@ -30,7 +30,7 @@
             app:layout_constraintStart_toEndOf="@+id/imageView">
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/tvTitle"
                 tools:text="EventTitle"

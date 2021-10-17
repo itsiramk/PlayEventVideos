@@ -6,5 +6,6 @@ class ServerDataSource @Inject constructor(
     private val iService: iService
 ) : BaseDataSource() {
 
-    suspend fun getEventSchedule() = iService.getSchedule()
+    suspend fun getEvents() = iService.getEvents()
+    suspend fun getSchedule() = iService.getSchedule()
 }

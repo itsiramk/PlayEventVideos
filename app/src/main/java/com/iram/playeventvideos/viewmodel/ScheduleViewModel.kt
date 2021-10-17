@@ -6,29 +6,30 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.iram.newsheadlines.utils.Resource
-import com.iram.playeventvideos.model.EventSchedule
+import com.iram.playeventvideos.model.Event
+import com.iram.playeventvideos.model.Schedule
 import com.iram.playeventvideos.repository.EventsRepository
 import kotlinx.coroutines.launch
 
-class EventScheduleViewModel @ViewModelInject constructor(
+class ScheduleViewModel @ViewModelInject constructor(
     private val eventsRepo: EventsRepository
 ) : ViewModel() {
-    private val _eventLiveData = MutableLiveData<Resource<List<EventSchedule>?>>()
+    private val _scheduleLiveData = MutableLiveData<Resource<List<Schedule>?>>()
 
-    val res: LiveData<Resource<List<EventSchedule>?>>
-        get() = _eventLiveData
+    val res: LiveData<Resource<List<Schedule>?>>
+        get() = _scheduleLiveData
 
     init {
         getEventSchedule()
     }
 
     private fun getEventSchedule() = viewModelScope.launch {
-        _eventLiveData.postValue(Resource.loading(null))
-        eventsRepo.getEventSchedule().let {
+        _scheduleLiveData.postValue(Resource.loading(null))
+        eventsRepo.getSchedule().let {
             if (it.isSuccessful) {
-                _eventLiveData.postValue(Resource.success(it.body()))
+                _scheduleLiveData.postValue(Resource.success(it.body()))
             } else {
-                _eventLiveData.postValue(Resource.error(it.errorBody().toString(), null))
+                _scheduleLiveData.postValue(Resource.error(it.errorBody().toString(), null))
             }
         }
     }

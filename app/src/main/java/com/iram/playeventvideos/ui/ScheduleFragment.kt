@@ -4,43 +4,54 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.iram.playeventvideos.databinding.FragmentDashboardBinding
-import com.iram.playeventvideos.viewmodel.EventScheduleViewModel
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.iram.playeventvideos.adapters.ScheduleListAdapter
+import com.iram.playeventvideos.databinding.FragmentScheduleBinding
+import com.iram.playeventvideos.utils.autoCleared
+import com.iram.playeventvideos.viewmodel.ScheduleViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ScheduleFragment : Fragment() {
+class ScheduleFragment : Fragment(), ScheduleListAdapter.ScheduleItemListener {
 
-    private lateinit var eventViewModel: EventScheduleViewModel
-    private var _binding: FragmentDashboardBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private lateinit var scheduleViewModel: ScheduleViewModel
+    private var binding: FragmentScheduleBinding by autoCleared()
+    private lateinit var scheduleListAdapter: ScheduleListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        eventViewModel =
-            ViewModelProvider(this).get(EventScheduleViewModel::class.java)
-
-        _binding = FragmentDashboardBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        val textView: TextView = binding.textDashboard
-       /* eventViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })*/
-        return root
+        scheduleViewModel = ViewModelProvider(this).get(ScheduleViewModel::class.java)
+        binding = FragmentScheduleBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initViews()
+        fetchData()
     }
+
+    private fun fetchData() {
+        scheduleViewModel.res.observe(viewLifecycleOwner, {
+            if (it?.data != null && it.data.isNotEmpty())
+                scheduleListAdapter.setItems(it.data)
+        })
+    }
+
+    private fun initViews() {
+        scheduleListAdapter = ScheduleListAdapter(this)
+        binding.recyclerView.layoutManager = LinearLayoutManager(context)
+        binding.recyclerView.itemAnimator = DefaultItemAnimator()
+        binding.recyclerView.adapter = scheduleListAdapter
+    }
+
+    override fun onClickedItemData(title: String) {
+    }
+
 }
