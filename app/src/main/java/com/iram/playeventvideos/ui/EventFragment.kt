@@ -1,9 +1,11 @@
 package com.iram.playeventvideos.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -50,6 +52,16 @@ class EventFragment : Fragment(), EventsListAdapter.EventItemListener {
         binding.recyclerView.adapter = eventsListAdapter
     }
 
-    override fun onClickedItemData(title: String) {
+    override fun onClickedItemData(videoUrl: String) {
+        if (videoUrl.isNotEmpty()) {
+            activity?.let {
+                val intent = Intent(it, VideoActivity::class.java)
+                intent.putExtra("video", videoUrl)
+                it.startActivity(intent)
+            }
+        } else {
+            Toast.makeText(context, "No Video to play!!", Toast.LENGTH_LONG).show()
+        }
+
     }
 }

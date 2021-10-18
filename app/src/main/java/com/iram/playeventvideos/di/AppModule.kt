@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder
 import com.iram.playeventvideos.BuildConfig
 import com.iram.playeventvideos.network.ServerDataSource
 import com.iram.playeventvideos.network.iService
-import com.iram.playeventvideos.repository.EventsRepository
+import com.iram.playeventvideos.repository.EventScheduleRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -53,5 +53,5 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideRepository(serverDataSource: ServerDataSource) = EventsRepository(serverDataSource)
+    fun provideRepository(serverDataSource: ServerDataSource) = EventScheduleRepository(serverDataSource)
 }

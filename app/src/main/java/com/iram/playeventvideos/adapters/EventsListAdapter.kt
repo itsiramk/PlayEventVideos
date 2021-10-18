@@ -55,7 +55,7 @@ class EventsListAdapter(private val listener: EventItemListener) :
                 .into(itemBinding.imageView)
 
             itemBinding.root.setOnClickListener {
-                listener.onClickedItemData(itemList.title)
+                listener.onClickedItemData(itemList.videoUrl)
             }
         }
     }
