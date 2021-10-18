@@ -32,6 +32,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/tvNoData"
         android:text="@string/noData"
+        style="@style/TextViewStyle"
+        android:textSize="18sp"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
