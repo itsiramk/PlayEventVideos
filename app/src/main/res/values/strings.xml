@@ -2,4 +2,5 @@
     <string name="app_name">PlayEventVideos</string>
     <string name="title_events">Events</string>
     <string name="title_schedule">Schedule</string>
+    <string name="noData">Unable to reach Server !!</string>
 </resources>

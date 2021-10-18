@@ -10,17 +10,21 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.iram.newsheadlines.utils.Resource
 import com.iram.playeventvideos.adapters.EventsListAdapter
-import com.iram.playeventvideos.databinding.FragmentEventBinding
+import com.iram.playeventvideos.databinding.LayoutRviewBinding
+import com.iram.playeventvideos.model.EventSchedule
 import com.iram.playeventvideos.utils.autoCleared
 import com.iram.playeventvideos.viewmodel.EventsViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
+
 
 @AndroidEntryPoint
 class EventFragment : Fragment(), EventsListAdapter.EventItemListener {
 
     private lateinit var eventViewModel: EventsViewModel
-    private var binding: FragmentEventBinding by autoCleared()
+    private var binding: LayoutRviewBinding by autoCleared()
     private lateinit var eventsListAdapter: EventsListAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,7 +32,7 @@ class EventFragment : Fragment(), EventsListAdapter.EventItemListener {
         savedInstanceState: Bundle?
     ): View? {
         eventViewModel = ViewModelProvider(this).get(EventsViewModel::class.java)
-        binding = FragmentEventBinding.inflate(inflater, container, false)
+        binding = LayoutRviewBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -39,9 +43,25 @@ class EventFragment : Fragment(), EventsListAdapter.EventItemListener {
     }
 
     private fun fetchData() {
+
+        binding.pBar.visibility = View.VISIBLE
         eventViewModel.res.observe(viewLifecycleOwner, {
-            if (it?.data != null && it.data.isNotEmpty())
-                eventsListAdapter.setItems(it.data)
+            when (it.status) {
+                Resource.Status.SUCCESS -> {
+                    binding.pBar.visibility = View.GONE
+                    Collections.sort(it.data, CustomComparator())
+                    if (it?.data != null && it.data.isNotEmpty()) {
+                        binding.tvNoData.visibility = View.GONE
+                        eventsListAdapter.setItems(it.data)
+                    }
+                }
+                Resource.Status.ERROR -> {
+                    if (eventsListAdapter.itemCount == 0)
+                        binding.tvNoData.visibility = View.VISIBLE
+                }
+                Resource.Status.LOADING ->
+                    binding.pBar.visibility = View.VISIBLE
+            }
         })
     }
 
@@ -62,6 +82,11 @@ class EventFragment : Fragment(), EventsListAdapter.EventItemListener {
         } else {
             Toast.makeText(context, "No Video to play!!", Toast.LENGTH_LONG).show()
         }
+    }
 
+    class CustomComparator : Comparator<EventSchedule> {
+        override fun compare(o1: EventSchedule, o2: EventSchedule): Int {
+            return o1.date.compareTo(o2.date)
+        }
     }
 }

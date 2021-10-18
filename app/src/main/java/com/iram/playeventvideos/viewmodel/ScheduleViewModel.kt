@@ -6,16 +6,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.iram.newsheadlines.utils.Resource
-import com.iram.playeventvideos.model.Schedule
+import com.iram.playeventvideos.model.EventSchedule
 import com.iram.playeventvideos.repository.EventScheduleRepository
 import kotlinx.coroutines.launch
+import org.jetbrains.annotations.Async
 
 class ScheduleViewModel @ViewModelInject constructor(
     private val eventScheduleRepo: EventScheduleRepository
 ) : ViewModel() {
-    private val _scheduleLiveData = MutableLiveData<Resource<List<Schedule>?>>()
+    private val _scheduleLiveData = MutableLiveData<Resource<List<EventSchedule>?>>()
 
-    val res: LiveData<Resource<List<Schedule>?>>
+    val res: LiveData<Resource<List<EventSchedule>?>>
         get() = _scheduleLiveData
 
     init {

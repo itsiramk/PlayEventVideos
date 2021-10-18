@@ -6,17 +6,5 @@
     android:layout_height="match_parent"
     tools:context=".ui.ScheduleFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/item_rview"
-        android:id="@+id/recyclerView"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textSize="20sp"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <include layout="@layout/layout_rview"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

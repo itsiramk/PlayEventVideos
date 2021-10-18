@@ -8,28 +8,25 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.iram.playeventvideos.R
 import com.iram.playeventvideos.databinding.ItemRviewBinding
-import com.iram.playeventvideos.model.Schedule
+import com.iram.playeventvideos.model.EventSchedule
 import com.iram.playeventvideos.utils.DateFormat
+import org.jetbrains.annotations.Async
 
-class ScheduleListAdapter(private val listener: ScheduleItemListener) :
+class ScheduleListAdapter :
     RecyclerView.Adapter<ScheduleListAdapter.ScheduleListViewHolder>() {
 
-    private var items = ArrayList<Schedule>()
+    private var items = ArrayList<EventSchedule>()
 
-    fun setItems(items: List<Schedule>) {
+    fun setItems(items: List<EventSchedule>) {
         this.items.clear()
         this.items.addAll(items)
         notifyDataSetChanged()
     }
 
-    interface ScheduleItemListener {
-        fun onClickedItemData(title: String)
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScheduleListViewHolder {
         val itemDataBinding =
             ItemRviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ScheduleListViewHolder(itemDataBinding, listener)
+        return ScheduleListViewHolder(itemDataBinding)
     }
 
     override fun onBindViewHolder(holder: ScheduleListViewHolder, position: Int) =
@@ -38,11 +35,11 @@ class ScheduleListAdapter(private val listener: ScheduleItemListener) :
     override fun getItemCount(): Int = items.size
 
     class ScheduleListViewHolder(
-        private val itemBinding: ItemRviewBinding, private val listener: ScheduleItemListener
+        private val itemBinding: ItemRviewBinding
     ) : RecyclerView.ViewHolder(itemBinding.root) {
 
-        private lateinit var itemList: Schedule
-        fun bind(item: Schedule) {
+        private lateinit var itemList: EventSchedule
+        fun bind(item: EventSchedule) {
             itemList = item
             itemBinding.tvTitle.text = item.title
             val formattedDate = DateFormat.dateToDayTime(DateFormat.stringToDate(item.date))
@@ -53,10 +50,6 @@ class ScheduleListAdapter(private val listener: ScheduleItemListener) :
                 .error(R.drawable.dazn)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(itemBinding.imageView)
-
-            itemBinding.root.setOnClickListener {
-                listener.onClickedItemData(itemList.title)
-            }
         }
     }
 }

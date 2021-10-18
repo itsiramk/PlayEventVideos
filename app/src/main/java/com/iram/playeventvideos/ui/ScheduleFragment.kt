@@ -8,17 +8,18 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.iram.newsheadlines.utils.Resource
 import com.iram.playeventvideos.adapters.ScheduleListAdapter
-import com.iram.playeventvideos.databinding.FragmentScheduleBinding
+import com.iram.playeventvideos.databinding.LayoutRviewBinding
 import com.iram.playeventvideos.utils.autoCleared
 import com.iram.playeventvideos.viewmodel.ScheduleViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ScheduleFragment : Fragment(), ScheduleListAdapter.ScheduleItemListener {
+class ScheduleFragment : Fragment() {
 
     private lateinit var scheduleViewModel: ScheduleViewModel
-    private var binding: FragmentScheduleBinding by autoCleared()
+    private var binding: LayoutRviewBinding by autoCleared()
     private lateinit var scheduleListAdapter: ScheduleListAdapter
 
     override fun onCreateView(
@@ -27,7 +28,7 @@ class ScheduleFragment : Fragment(), ScheduleListAdapter.ScheduleItemListener {
         savedInstanceState: Bundle?
     ): View? {
         scheduleViewModel = ViewModelProvider(this).get(ScheduleViewModel::class.java)
-        binding = FragmentScheduleBinding.inflate(inflater, container, false)
+        binding = LayoutRviewBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -38,20 +39,30 @@ class ScheduleFragment : Fragment(), ScheduleListAdapter.ScheduleItemListener {
     }
 
     private fun fetchData() {
+        binding.pBar.visibility = View.VISIBLE
         scheduleViewModel.res.observe(viewLifecycleOwner, {
-            if (it?.data != null && it.data.isNotEmpty())
-                scheduleListAdapter.setItems(it.data)
+            when (it.status) {
+                Resource.Status.SUCCESS -> {
+                    binding.pBar.visibility = View.GONE
+                    if (it?.data != null && it.data.isNotEmpty()) {
+                        binding.tvNoData.visibility = View.GONE
+                        scheduleListAdapter.setItems(it.data)
+                    }
+                }
+                Resource.Status.ERROR -> {
+                    if (scheduleListAdapter.itemCount == 0)
+                        binding.tvNoData.visibility = View.VISIBLE
+                }
+                Resource.Status.LOADING ->
+                    binding.pBar.visibility = View.VISIBLE
+            }
         })
     }
 
     private fun initViews() {
-        scheduleListAdapter = ScheduleListAdapter(this)
+        scheduleListAdapter = ScheduleListAdapter()
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
         binding.recyclerView.itemAnimator = DefaultItemAnimator()
         binding.recyclerView.adapter = scheduleListAdapter
     }
-
-    override fun onClickedItemData(title: String) {
-    }
-
 }
