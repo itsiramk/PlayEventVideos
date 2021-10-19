@@ -10,7 +10,6 @@ import com.iram.playeventvideos.R
 import com.iram.playeventvideos.databinding.ItemRviewBinding
 import com.iram.playeventvideos.model.EventSchedule
 import com.iram.playeventvideos.utils.DateFormat
-import org.jetbrains.annotations.Async
 
 class ScheduleListAdapter :
     RecyclerView.Adapter<ScheduleListAdapter.ScheduleListViewHolder>() {

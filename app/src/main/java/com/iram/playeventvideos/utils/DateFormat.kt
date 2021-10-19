@@ -21,6 +21,28 @@ class DateFormat {
             val formatter = SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSSSSS'Z'", Locale.getDefault())
             return formatter.parse(stringDate)
         }
+
+        fun getTomorrowsDate(date: Date?): Boolean {
+            val newTime = Date()
+            try {
+                val cal: Calendar = Calendar.getInstance()
+                cal.time = newTime
+                val oldCal: Calendar = Calendar.getInstance()
+                oldCal.time = date
+                val oldYear: Int = oldCal.get(Calendar.YEAR)
+                val year: Int = cal.get(Calendar.YEAR)
+                val oldDay: Int = oldCal.get(Calendar.DAY_OF_YEAR)
+                val day: Int = cal.get(Calendar.DAY_OF_YEAR)
+                if (oldYear == year) {
+                    val value = oldDay - day
+                    return true
+                    } else {
+                        return false
+                    }
+                } catch (e: Exception) { }
+            return false
+        }
+
         fun dateToDayTime(oldTime: Date?): String? {
             val newTime = Date()
             try {

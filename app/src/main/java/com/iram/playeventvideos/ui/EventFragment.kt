@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.iram.newsheadlines.utils.Resource
 import com.iram.playeventvideos.adapters.EventsListAdapter
 import com.iram.playeventvideos.databinding.LayoutRviewBinding
-import com.iram.playeventvideos.model.EventSchedule
+import com.iram.playeventvideos.utils.CustomComparator
 import com.iram.playeventvideos.utils.autoCleared
 import com.iram.playeventvideos.viewmodel.EventsViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,8 +49,8 @@ class EventFragment : Fragment(), EventsListAdapter.EventItemListener {
             when (it.status) {
                 Resource.Status.SUCCESS -> {
                     binding.pBar.visibility = View.GONE
-                    Collections.sort(it.data, CustomComparator())
                     if (it?.data != null && it.data.isNotEmpty()) {
+                        Collections.sort(it.data, CustomComparator())
                         binding.tvNoData.visibility = View.GONE
                         eventsListAdapter.setItems(it.data)
                     }
@@ -81,12 +81,6 @@ class EventFragment : Fragment(), EventsListAdapter.EventItemListener {
             }
         } else {
             Toast.makeText(context, "No Video to play!!", Toast.LENGTH_LONG).show()
-        }
-    }
-
-    class CustomComparator : Comparator<EventSchedule> {
-        override fun compare(o1: EventSchedule, o2: EventSchedule): Int {
-            return o1.date.compareTo(o2.date)
         }
     }
 }

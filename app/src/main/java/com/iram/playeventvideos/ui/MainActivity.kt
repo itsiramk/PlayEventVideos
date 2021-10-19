@@ -43,8 +43,7 @@ class MainActivity : AppCompatActivity() {
             .setPositiveButton(
                 "Yes"
             ) { dialog, which ->
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
+                finish()
             }
             .setNegativeButton("No", null)
             .show()
