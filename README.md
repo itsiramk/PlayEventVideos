@@ -20,7 +20,7 @@ The screen has a bottom navigation with two tabs - ***"Event"*** and ***"Schedul
 
 -*If tomorrow schedule is unavailable, default text message is displayed "Tomorrow Data Unavailable!!".*
 
-Android Components used:
+***Android Components used:***
 
 *Development Language* - Kotlin
 
