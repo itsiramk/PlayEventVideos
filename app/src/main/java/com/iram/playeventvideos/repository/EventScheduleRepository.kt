@@ -9,7 +9,7 @@ import javax.inject.Singleton
 @Singleton
 class EventScheduleRepository @Inject constructor(private var serverDataSource: ServerDataSource) {
 
-    suspend fun getEvents(): Response<List<EventSchedule>> {
+    suspend fun getEvents(): Response<ArrayList<EventSchedule>> {
         return serverDataSource.getEvents()
     }
     suspend fun getSchedule(): Response<List<EventSchedule>> {

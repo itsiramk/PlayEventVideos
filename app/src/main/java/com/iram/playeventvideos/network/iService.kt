@@ -8,7 +8,7 @@ import retrofit2.http.GET
 interface iService {
 
     @GET("getEvents")
-    suspend fun getEvents(): Response<List<EventSchedule>>
+    suspend fun getEvents(): Response<ArrayList<EventSchedule>>
 
     @GET("getSchedule")
     suspend fun getSchedule(): Response<List<EventSchedule>>

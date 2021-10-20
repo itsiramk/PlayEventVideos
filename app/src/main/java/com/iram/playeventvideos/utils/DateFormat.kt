@@ -35,11 +35,13 @@ class DateFormat {
                 val day: Int = cal.get(Calendar.DAY_OF_YEAR)
                 if (oldYear == year) {
                     val value = oldDay - day
-                    return true
-                    } else {
-                        return false
-                    }
-                } catch (e: Exception) { }
+                    if (value == 1)
+                        return true
+                } else {
+                    return false
+                }
+            } catch (e: Exception) {
+            }
             return false
         }
 

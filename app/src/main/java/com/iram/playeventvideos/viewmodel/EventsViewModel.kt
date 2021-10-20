@@ -13,9 +13,9 @@ import kotlinx.coroutines.launch
 class EventsViewModel @ViewModelInject constructor(
     private val eventScheduleRepo: EventScheduleRepository
 ) : ViewModel() {
-    private val _eventLiveData = MutableLiveData<Resource<List<EventSchedule>?>>()
+    private val _eventLiveData = MutableLiveData<Resource<ArrayList<EventSchedule>?>>()
 
-    val res: LiveData<Resource<List<EventSchedule>?>>
+    val res: LiveData<Resource<ArrayList<EventSchedule>?>>
         get() = _eventLiveData
 
     init {

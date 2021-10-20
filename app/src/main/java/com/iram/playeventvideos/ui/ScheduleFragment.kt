@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.iram.newsheadlines.utils.Resource
+import com.iram.playeventvideos.R
 import com.iram.playeventvideos.adapters.ScheduleListAdapter
 import com.iram.playeventvideos.databinding.LayoutRviewBinding
 import com.iram.playeventvideos.model.EventSchedule
@@ -53,11 +54,7 @@ class ScheduleFragment : Fragment() {
     private fun refreshData() {
         val handler = Looper.myLooper()?.let { Handler(it) }
         val delay = 30 * 1000
-        handler?.postDelayed(object : Runnable {
-            override fun run() {
-                scheduleListAdapter.notifyDataSetChanged()
-            }
-        }, delay.toLong())
+        handler?.postDelayed({ scheduleListAdapter.notifyDataSetChanged() }, delay.toLong())
     }
 
     private fun fetchData() {
@@ -68,16 +65,21 @@ class ScheduleFragment : Fragment() {
                 Resource.Status.SUCCESS -> {
                     binding.pBar.visibility = View.GONE
                     if (it?.data != null && it.data.isNotEmpty()) {
-                        tomorrowScheduleList= ArrayList(it.data)
-                        for(i in tomorrowScheduleList){
+                        tomorrowScheduleList = ArrayList(it.data)
+                        for (i in it.data) {
                             val date = DateFormat.getTomorrowsDate(DateFormat.stringToDate(i.date))
-                            if(!date){
+                            if (!date) {
                                 tomorrowScheduleList.remove(i)
                             }
                         }
-                        Collections.sort(tomorrowScheduleList, CustomComparator())
-                        binding.tvNoData.visibility = View.GONE
-                        scheduleListAdapter.setItems(tomorrowScheduleList)
+                        if (tomorrowScheduleList.isNotEmpty()) {
+                            Collections.sort(tomorrowScheduleList, CustomComparator())
+                            binding.tvNoData.visibility = View.GONE
+                            scheduleListAdapter.setItems(tomorrowScheduleList)
+                        }else{
+                            binding.tvNoData.text = requireContext().getString(R.string.no_data)
+                            binding.tvNoData.visibility = View.VISIBLE
+                        }
                     }
                 }
                 Resource.Status.ERROR -> {

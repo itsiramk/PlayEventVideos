@@ -2,9 +2,9 @@ package com.iram.playeventvideos.model
 
 class EventSchedule{
     var date: String = ""
-    val subtitle: String = ""
+    var subtitle: String = ""
     var imageUrl: String = ""
-    val videoUrl: String = ""
-    val id: String = ""
-    val title: String = ""
+    var videoUrl: String = ""
+    var id: String = ""
+    var title: String = ""
 }
