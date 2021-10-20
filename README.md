@@ -39,3 +39,9 @@ The screen has a bottom navigation with two tabs - ***"Event"*** and ***"Schedul
 *API For Event List* - https://us-central1-dazn-sandbox.cloudfunctions.net/getEvents
 
 *API For Schedule List* - https://us-central1-dazn-sandbox.cloudfunctions.net/getSchedule
+
+![Screen1](https://user-images.githubusercontent.com/16866972/138167126-7024d203-04d9-43d0-a324-2e4451b8e7b2.png)
+![VideoPlay](https://user-images.githubusercontent.com/16866972/138167151-72c39a7e-4bba-494a-b907-eb533317d5b2.png)
+![schedule](https://user-images.githubusercontent.com/16866972/138167172-b4c2c124-c174-4419-aaed-ab61ab0152b4.png)
+
+
