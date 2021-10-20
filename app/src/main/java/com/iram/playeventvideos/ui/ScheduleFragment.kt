@@ -77,7 +77,7 @@ class ScheduleFragment : Fragment() {
                             binding.tvNoData.visibility = View.GONE
                             scheduleListAdapter.setItems(tomorrowScheduleList)
                         }else{
-                            binding.tvNoData.text = requireContext().getString(R.string.no_data)
+                            binding.tvNoData.text = requireContext().getString(R.string.no_tomorrow_data)
                             binding.tvNoData.visibility = View.VISIBLE
                         }
                     }

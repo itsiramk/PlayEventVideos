@@ -1,5 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">PlayEventVideos</string>
+    <string name="title_events">Events</string>
+    <string name="title_schedule">Schedule</string>
     <string name="noData">Unable to reach Server !!</string>
-    <string name="no_data">No Data Available!!</string>
+    <string name="no_tomorrow_data">Tomorrow Schedule UnAvailable!!</string>
 </resources>
