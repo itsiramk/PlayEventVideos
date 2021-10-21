@@ -36,6 +36,8 @@ The screen has a bottom navigation with two tabs - ***"Event"*** and ***"Schedul
 
 *UI* - ConstraintLayout, Bottom Navigation
 
+*Third-Party Library (For Video)* - ExoPlayer
+
 *API For Event List* - https://us-central1-dazn-sandbox.cloudfunctions.net/getEvents
 
 *API For Schedule List* - https://us-central1-dazn-sandbox.cloudfunctions.net/getSchedule
