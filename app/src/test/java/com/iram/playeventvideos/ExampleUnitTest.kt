@@ -17,7 +17,10 @@ class ExampleUnitTest {
     }
 
     @Test
-    fun dateCheck(){
-        assertEquals("true", DateFormat.getTomorrowsDate(DateFormat.stringToDate("2021-10-23T04:06:25.232Z")))
+    fun tomorrowDateCheck(){
+        assertEquals(true, DateFormat.getTomorrowsDate(DateFormat.stringToDate("2021-10-23T04:06:25.232Z")))
+    }@Test
+    fun dateCheckFormat(){
+        assertEquals("24.10.2021", DateFormat.dateToDayTime(DateFormat.stringToDate("2021-10-24T04:06:25.232Z")))
     }
 }

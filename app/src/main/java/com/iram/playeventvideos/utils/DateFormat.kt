@@ -6,8 +6,8 @@ import java.util.*
 
 class DateFormat {
     companion object {
-        private val yyyy_MM_dd_HH_mm: SimpleDateFormat = SimpleDateFormat(
-            "yyyy-MM-dd HH:mm", Locale.getDefault()
+        private val dd_MM_yyyy: SimpleDateFormat = SimpleDateFormat(
+            "dd.MM.yyyy", Locale.getDefault()
         )
         private val HHmm: SimpleDateFormat = SimpleDateFormat(
             "HH:mm",
@@ -65,12 +65,12 @@ class DateFormat {
                     } else if (value == 1) {
                         "Tomorrow, " + HHmm.format(oldTime)
                     } else {
-                        MM_dd_HHmm.format(oldTime)
+                        dd_MM_yyyy.format(oldTime)
                     }
                 }
             } catch (e: Exception) {
             }
-            return yyyy_MM_dd_HH_mm.format(oldTime)
+            return dd_MM_yyyy.format(oldTime)
         }
     }
 }
